@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.time.OffsetDateTime;
+import org.json.JSONObject;
 
 @DgsComponent
 public class NewsArticleDataFetcher {

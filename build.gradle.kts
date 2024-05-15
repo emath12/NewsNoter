@@ -69,6 +69,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.json:json:20210307")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
