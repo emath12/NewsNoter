@@ -1,0 +1,20 @@
+# equivilant to GETTers
+type Query {
+    articles(filter: ArticleFilter): [Article]
+}
+
+type Article {
+    link: String
+    headline: String
+    category: String
+    short_description: String
+    authors: [String]
+    date: DateTime
+}
+
+input ArticleFilter {
+    title : String
+    author : String
+}
+
+scalar DateTime

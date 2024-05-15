@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: NewsApp
+
+  graphql:
+    graphiql:
+      enabled: true
+    websocket:
+      path: /graphql
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    io.micrometer.core.instrument.logging.*: true
