@@ -3,12 +3,25 @@ type Query {
     articles(filter: ArticleFilter): [Article]
 }
 
+type Mutation {
+    addArticle(article: submittedArticle): [Article]
+}
+
 type Article {
     link: String
     headline: String
     category: String
     short_description: String
-    authors: [String]
+    authors: String
+    date: DateTime
+}
+
+input submittedArticle {
+    link: String
+    headline: String
+    category: String
+    short_description: String
+    authors: String
     date: DateTime
 }
 

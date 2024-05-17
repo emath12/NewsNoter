@@ -3,8 +3,7 @@ package com.generated.types;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.time.OffsetDateTime;
-import java.util.List;
+import java.sql.Date;
 
 public class Article {
   private String link;
@@ -15,15 +14,15 @@ public class Article {
 
   private String short_description;
 
-  private List<String> authors;
+  private String authors;
 
-  private OffsetDateTime date;
+  private Date date;
 
   public Article() {
   }
 
   public Article(String link, String headline, String category, String short_description,
-      List<String> authors, OffsetDateTime date) {
+      String authors, Date date) {
     this.link = link;
     this.headline = headline;
     this.category = category;
@@ -64,19 +63,19 @@ public class Article {
     this.short_description = short_description;
   }
 
-  public List<String> getAuthors() {
+  public String getAuthors() {
     return authors;
   }
 
-  public void setAuthors(List<String> authors) {
+  public void setAuthors(String authors) {
     this.authors = authors;
   }
 
-  public OffsetDateTime getDate() {
+  public Date getDate() {
     return date;
   }
 
-  public void setDate(OffsetDateTime date) {
+  public void setDate(Date date) {
     this.date = date;
   }
 
@@ -116,9 +115,9 @@ public class Article {
 
     private String short_description;
 
-    private List<String> authors;
+    private String authors;
 
-    private OffsetDateTime date;
+    private Date date;
 
     public Article build() {
                   com.generated.types.Article result = new com.generated.types.Article();
@@ -151,12 +150,12 @@ public class Article {
       return this;
     }
 
-    public com.generated.types.Article.Builder authors(List<String> authors) {
+    public com.generated.types.Article.Builder authors(String authors) {
       this.authors = authors;
       return this;
     }
 
-    public com.generated.types.Article.Builder date(OffsetDateTime date) {
+    public com.generated.types.Article.Builder date(Date date) {
       this.date = date;
       return this;
     }

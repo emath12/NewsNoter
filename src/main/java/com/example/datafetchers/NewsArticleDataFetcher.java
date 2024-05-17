@@ -2,16 +2,20 @@ package com.example.datafetchers;
 
 import com.generated.types.Article;
 import com.generated.types.ArticleFilter;
+import com.generated.types.submittedArticle;
 import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.fasterxml.jackson.core.type.TypeReference;
-import java.io.File;
-import java.util.Arrays;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.time.OffsetDateTime;
-import org.json.JSONObject;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Date;
 
 @DgsComponent
 public class NewsArticleDataFetcher {
@@ -19,29 +23,103 @@ public class NewsArticleDataFetcher {
     @DgsQuery
     public List<Article> articles(@InputArgument("filter") ArticleFilter filter) {
 
-        File jsonFile = new File("News_Category_Dataset_v3.json");
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        Connection conn = null;
+        List<Article> queriedArticles = new ArrayList<>();
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            List<Article> articles = mapper.readValue(jsonFile, new TypeReference<List<Article>>() {});
-//            articles.forEach(article -> System.out.println(article.getHeadline()));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
 
-        System.out.println("Filter: " + filter);
+            conn = DriverManager.getConnection(url);
 
-        String link = "https://www.example.com";
-        String headline = "Breaking News: Java Simplified";
-        String category = "Technology";
-        String shortDescription = "A quick overview of new features in Java.";
-        List<String> authors = Arrays.asList("John Doe", "Jane Smith");
-        OffsetDateTime date = OffsetDateTime.now();
+            if (conn != null) {
+                System.out.println("Connected to the database successfully!");
+            }
 
-        Article article = new Article(link, headline, category, shortDescription, authors, date);
+            PreparedStatement pstmt = conn.prepareStatement(
+                    "select * from news.news_articles"
+            );
 
-        System.out.println("Article: " + article.getHeadline());
+            ResultSet res = pstmt.executeQuery();
 
-        return Arrays.asList(article, article);
+            while (res.next()) {
+                String link = res.getString("link");
+                String headline = res.getString("headline");
+                String category = res.getString("category");
+                String short_description = res.getString("short_description");
+                String authors = res.getString("authors");
+                Date pub_date = res.getDate("pub_date");
+
+                Article a = new Article(link, headline, category, short_description, authors, pub_date);
+                queriedArticles.add(a);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error connecting to the database");
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error closing the connection");
+                ex.printStackTrace();
+            }
+        }
+
+        return queriedArticles;
+    }
+
+    @DgsMutation
+    public Article addArticle(@InputArgument("article") submittedArticle submittedArticle) {
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        Connection conn = null;
+
+        Article a = new Article();
+
+        try {
+            conn = DriverManager.getConnection(url);
+
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO " +
+                    "news.news_articles(link, headline, category, short_description, authors, pub_date) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)"
+            );
+
+            pstmt.setString(1, submittedArticle.getLink());
+            pstmt.setString(2, submittedArticle.getHeadline());
+            pstmt.setString(3, submittedArticle.getCategory());
+            pstmt.setString(4, submittedArticle.getShort_description());
+            pstmt.setString(5, submittedArticle.getAuthors());
+            pstmt.setDate(6, submittedArticle.getDate());
+
+            pstmt.executeQuery();
+
+            a.setLink(submittedArticle.getLink());
+            a.setHeadline(submittedArticle.getHeadline());
+            a.setCategory(submittedArticle.getCategory());
+            a.setShort_description(submittedArticle.getShort_description());
+            a.setAuthors(submittedArticle.getAuthors());
+            a.setDate(submittedArticle.getDate());
+
+        } catch (SQLException e) {
+
+            System.out.println("Error connecting to the database");
+            e.printStackTrace();
+
+        } finally {
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error closing the connection");
+                e.printStackTrace();
+            }
+
+        }
+
+        return a;
     }
 }

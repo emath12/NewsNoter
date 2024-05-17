@@ -16,7 +16,8 @@
 
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
-
+import org.gradle.internal.impldep.org.joda.time.DateTime
+import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 
 plugins {
     id("java")
@@ -69,18 +70,19 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-micrometer")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.json:json:20210307")
+    implementation("org.postgresql:postgresql:42.4.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.netflix.graphql.dgs:graphql-dgs-client")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
 }
-
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
     generateClientv2 = true
     packageName = "com.generated"
+    typeMapping = mutableMapOf("DateTime" to "java.sql.Date")
 }
+
 
 tasks.withType<Test> {
     useJUnitPlatform()
