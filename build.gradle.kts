@@ -80,7 +80,7 @@ dependencies {
 tasks.withType<com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask> {
     generateClientv2 = true
     packageName = "com.generated"
-    typeMapping = mutableMapOf("DateTime" to "java.sql.Date")
+//    typeMapping = mutableMapOf("DateTime" to "java.sql.Date")
 }
 
 

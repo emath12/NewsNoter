@@ -3,7 +3,7 @@ package com.generated.types;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.sql.Date;
+import java.time.OffsetDateTime;
 
 public class submittedArticle {
   private String link;
@@ -16,13 +16,13 @@ public class submittedArticle {
 
   private String authors;
 
-  private Date date;
+  private OffsetDateTime date;
 
   public submittedArticle() {
   }
 
   public submittedArticle(String link, String headline, String category, String short_description,
-      String authors, Date date) {
+      String authors, OffsetDateTime date) {
     this.link = link;
     this.headline = headline;
     this.category = category;
@@ -71,11 +71,11 @@ public class submittedArticle {
     this.authors = authors;
   }
 
-  public Date getDate() {
+  public OffsetDateTime getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(OffsetDateTime date) {
     this.date = date;
   }
 
@@ -117,7 +117,7 @@ public class submittedArticle {
 
     private String authors;
 
-    private Date date;
+    private OffsetDateTime date;
 
     public submittedArticle build() {
                   com.generated.types.submittedArticle result = new com.generated.types.submittedArticle();
@@ -156,7 +156,7 @@ public class submittedArticle {
       return this;
     }
 
-    public com.generated.types.submittedArticle.Builder date(Date date) {
+    public com.generated.types.submittedArticle.Builder date(OffsetDateTime date) {
       this.date = date;
       return this;
     }

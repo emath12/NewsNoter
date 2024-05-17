@@ -16,6 +16,12 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.time.ZoneId;
+import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+
 
 @DgsComponent
 public class NewsArticleDataFetcher {
@@ -49,7 +55,9 @@ public class NewsArticleDataFetcher {
                 String authors = res.getString("authors");
                 Date pub_date = res.getDate("pub_date");
 
-                Article a = new Article(link, headline, category, short_description, authors, pub_date);
+                OffsetDateTime offsetDateTime = pub_date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toOffsetDateTime();
+
+                Article a = new Article(link, headline, category, short_description, authors, offsetDateTime);
                 queriedArticles.add(a);
             }
 
@@ -86,14 +94,17 @@ public class NewsArticleDataFetcher {
                     "VALUES (?, ?, ?, ?, ?, ?)"
             );
 
+            LocalDate ld = submittedArticle.getDate().toLocalDate();
+            Date sd = Date.valueOf(ld);
+
             pstmt.setString(1, submittedArticle.getLink());
             pstmt.setString(2, submittedArticle.getHeadline());
             pstmt.setString(3, submittedArticle.getCategory());
             pstmt.setString(4, submittedArticle.getShort_description());
             pstmt.setString(5, submittedArticle.getAuthors());
-            pstmt.setDate(6, submittedArticle.getDate());
+            pstmt.setDate(6, sd);
 
-            pstmt.executeQuery();
+            pstmt.executeUpdate();
 
             a.setLink(submittedArticle.getLink());
             a.setHeadline(submittedArticle.getHeadline());

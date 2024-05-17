@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-    addArticle(article: submittedArticle): [Article]
+    addArticle(article: submittedArticle): Article
 }
 
 type Article {
