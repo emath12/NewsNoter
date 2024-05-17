@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="48c8187d-a686-4f62-9eab-6bc44a27ed8c" name="News_Data_Source Mapping">
+      <data-sources db="3ee3c3c9-a27f-4e73-8d5a-be484fe34e19" />
+    </mapping>
+    <mapping uuid="b621afa5-4fa9-4868-a9c8-8fa7d28f408d" name="news Mapping">
+      <data-sources db="2cb2c1a2-ef56-4791-bb41-cdc8f82881ed" />
+    </mapping>
+    <mapping uuid="05f4f7a3-e188-447f-8d01-4467059a38ae" name="DDL Mapping">
+      <data-sources ddl="2f81adcd-988a-43c8-ba77-a34b3902201c" />
+    </mapping>
+    <mapping uuid="ae4ff7b9-09d7-408e-95fa-6b7030ad2dbc" name="SQLite Mapping">
+      <data-sources db="b6f0317e-8e54-4514-af1e-43e2bf4d5cd8" ddl="2f81adcd-988a-43c8-ba77-a34b3902201c" />
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="2f81adcd-988a-43c8-ba77-a34b3902201c" />
+          <option name="name" value="da mapping" />
+          <option name="dbmsName" value="UNKNOWN" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/ddl.sql" />
+            </array>
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
