@@ -42,8 +42,10 @@ public class NewsArticleDataFetcher {
             }
 
             PreparedStatement pstmt = conn.prepareStatement(
-                    "select * from news.news_articles"
+                    "select * from news.news_articles LIKE ?"
             );
+
+            pstmt.setString(1, filter.getTitle());
 
             ResultSet res = pstmt.executeQuery();
 
